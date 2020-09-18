@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControllerScript : MonoBehaviour
 {
@@ -9,29 +10,35 @@ public class ControllerScript : MonoBehaviour
     public Sprite monstresleep,monstreeat,monstrejoy, monstredebase;
     public SpriteRenderer visuelmonstre;
     bool busy;
+    public Image jaugefaim, jaugesommeil, jaugejoie;
+    public GameObject rip;
     
     void Start()
     {
-        
+        rip.SetActive(false);
     }
 
     
     
     void Update()
     {
+        Debug.Log(Smoggles.Hunger);
         if(Smoggles.IsDead)
         {
+            rip.SetActive(true);
             Debug.Log("The Character is Dead !");
         }
         else
         {
-            Smoggles.Hunger -= Time.deltaTime/60f;
-            Smoggles.Sleep -= Time.deltaTime/120f;
-            Smoggles.Joy -= Time.deltaTime/180f;           
+            Smoggles.Hunger -= Time.deltaTime/15f;
+            Smoggles.Sleep -= Time.deltaTime/30f;
+            Smoggles.Joy -= Time.deltaTime/60f;           
         }
         
 
-        
+        jaugefaim.fillAmount = 1- Smoggles.Hunger/10f;
+        jaugesommeil.fillAmount = Smoggles.Sleep/10f;
+        jaugejoie.fillAmount = Smoggles.Joy/10f;
 
 
         
