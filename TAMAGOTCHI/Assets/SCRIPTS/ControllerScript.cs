@@ -5,113 +5,106 @@ using UnityEngine;
 public class ControllerScript : MonoBehaviour
 {
 
-    public Tamagotchi Pompote = new Tamagotchi(30, 10, 10, 10);
+    public Tamagotchi Smoggles = new Tamagotchi(30, 10, 10, 10);
+    float Timer;
     
     void Start()
     {
         
     }
 
-    
+    void TourDejeu()
+    {
+
+    }
     
     void Update()
     {
-        if(Pompote.IsDead)
+        if(Smoggles.IsDead)
         {
             Debug.Log("The Character is Dead !");
         }
+        else
+        {
+            Smoggles.Hunger -= Time.deltaTime/60f;
+            Smoggles.Sleep -= Time.deltaTime/120f;
+            Smoggles.Joy -= Time.deltaTime/180f;
 
-        //Quand j'appuies sur A, la valeur de Hunger diminue de 1
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            OneDamageTest();
+            
         }
-        //Quand j'appuies sur B, la valeur de Sleep diminue de 1
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            TwoDamageTest();
-        }
-        //Quand j'appuies sur C, la valeur de Joy diminue de 1
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            ThreeDamageTest();
-        }
+        
+
+        
+
+
+        
         //Quand j'appuies sur Q, la valeur de Hunger se met à 10
         if(Input.GetKeyDown(KeyCode.Q))
         {
             Eat();
         }
         //Quand j'appuies sur Z, la valeur de Sleep se met à 10
-        if(Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKeyDown(KeyCode.D))
         {
             Sleep();
         }
         //Quand j'appuies sur D, la valeur de Joy se met à 10
-        if(Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKeyDown(KeyCode.Z))
         {
             Joy();
         }
+
         
-    }
+    }//FIN UPDATE
 
-    //TEST de damage
-    void OneDamageTest()
-    {        
-        Pompote.Hunger --;
-        Debug.Log("Hunger =   " + Pompote.Hunger);
-    }
+    
 
-    void TwoDamageTest()
-    {        
-        Pompote.Sleep --;
-        Debug.Log("Sleep =   " + Pompote.Sleep);
-    }
-
-    void ThreeDamageTest()
-    {        
-        Pompote.Joy --;
-        Debug.Log("Joy =   " + Pompote.Joy);
-    }
-    //TESTS de damage
+    //Il faut que j'affiche quand il mange le sprite de quand il mange aussi 
 
     //Fonction Manger
     void Eat()
     {
-        //Remettre la valeur initiale, reset hunger (je ne sais pas encore comment faire);
-        Pompote.Hunger = 10 ;
-        Debug.Log("Hunger =   " + Pompote.Hunger);
+        
+        Smoggles.Hunger = 10 ;
+        Smoggles.Joy ++;
+        Smoggles.Sleep ++;
+        Debug.Log("Hunger =   " + Smoggles.Hunger);
     }
 
     //Fonction Dormir
     void Sleep()
     {
-        //Remettre la valeur initiale, reset sleep (je ne sais pas encore comment faire);
-        Pompote.Sleep = 10;
-        Debug.Log("Sleep =   " + Pompote.Sleep);
+        
+        Smoggles.Sleep = 10;
+        Smoggles.Joy ++;
+        Smoggles.Hunger -= 2f;
+        Debug.Log("Sleep =   " + Smoggles.Sleep);
     }
 
     //Fonction de Joie
     void Joy()
     {
-        //Remettre la valeur initiale, reset joy (je ne sais pas encore comment faire);
-        Pompote.Joy = 10;
-        Debug.Log("Joy =   " + Pompote.Joy);
+        
+        Smoggles.Joy = 10;
+        Smoggles.Sleep ++;
+        Debug.Log("Joy =   " + Smoggles.Joy);
     }
 
 
 }
 
 
+
 public class Tamagotchi
 {
     public bool IsDead { get; private set; }
-    private int _health;
+    private float _health;
 
-    private int _hunger;
-    private int _sleep;
-    private int _joy;
+    private float _hunger;
+    private float _sleep;
+    private float _joy;
 
-    public int Health
+    public float Health
     {
         get
         {
@@ -129,7 +122,7 @@ public class Tamagotchi
 
     }
 
-    public int Hunger
+    public float Hunger
     {
         get
         {
@@ -138,17 +131,18 @@ public class Tamagotchi
         set
         {
             _hunger = value;
+            _hunger = Mathf.Clamp(value,0,10f);  
             if(_hunger <= 0)
             {
                 IsDead = true;
                 _health = 0;
             }
-
+            
             
         }
     }
 
-    public int Sleep
+    public float Sleep
     {
         get
         {
@@ -157,6 +151,7 @@ public class Tamagotchi
         set
         {
             _sleep = value;
+            _sleep = Mathf.Clamp(value,0,10f);
             if(_sleep <= 0)
             {
                 IsDead = true;
@@ -168,7 +163,7 @@ public class Tamagotchi
         }
     }
 
-    public int Joy
+    public float Joy
     {
         get
         {
@@ -177,6 +172,7 @@ public class Tamagotchi
         set
         {
             _joy = value;
+            _joy = Mathf.Clamp(value,0,10f);
             if(_joy <= 0)
             {
                 IsDead = true;
@@ -187,14 +183,14 @@ public class Tamagotchi
         }
     }
 
-    public Tamagotchi(int health, int hunger, int sleep, int joy) 
+    public Tamagotchi(float health, float hunger, float sleep, float joy) 
     {
         _health = health;
         _hunger = hunger;
         _sleep = sleep;
         _joy = joy;
     }
-
+    
     
 
 
