@@ -12,8 +12,7 @@ public class ControllerScript : MonoBehaviour
         
     }
 
-    //[ContextMenu("Damage")]
-    //public void Damage();
+    
     
     void Update()
     {
@@ -22,17 +21,81 @@ public class ControllerScript : MonoBehaviour
             Debug.Log("The Character is Dead !");
         }
 
+        //Quand j'appuies sur A, la valeur de Hunger diminue de 1
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            OneDamageTest();
+        }
+        //Quand j'appuies sur B, la valeur de Sleep diminue de 1
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            TwoDamageTest();
+        }
+        //Quand j'appuies sur C, la valeur de Joy diminue de 1
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            ThreeDamageTest();
+        }
+        //Quand j'appuies sur Q, la valeur de Hunger se met à 10
         if(Input.GetKeyDown(KeyCode.Q))
         {
             Eat();
         }
+        //Quand j'appuies sur Z, la valeur de Sleep se met à 10
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            Sleep();
+        }
+        //Quand j'appuies sur D, la valeur de Joy se met à 10
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            Joy();
+        }
+        
     }
 
-
-    void Eat()
-    {
+    //TEST de damage
+    void OneDamageTest()
+    {        
         Pompote.Hunger --;
         Debug.Log("Hunger =   " + Pompote.Hunger);
+    }
+
+    void TwoDamageTest()
+    {        
+        Pompote.Sleep --;
+        Debug.Log("Sleep =   " + Pompote.Sleep);
+    }
+
+    void ThreeDamageTest()
+    {        
+        Pompote.Joy --;
+        Debug.Log("Joy =   " + Pompote.Joy);
+    }
+    //TESTS de damage
+
+    //Fonction Manger
+    void Eat()
+    {
+        //Remettre la valeur initiale, reset hunger (je ne sais pas encore comment faire);
+        Pompote.Hunger = 10 ;
+        Debug.Log("Hunger =   " + Pompote.Hunger);
+    }
+
+    //Fonction Dormir
+    void Sleep()
+    {
+        //Remettre la valeur initiale, reset sleep (je ne sais pas encore comment faire);
+        Pompote.Sleep = 10;
+        Debug.Log("Sleep =   " + Pompote.Sleep);
+    }
+
+    //Fonction de Joie
+    void Joy()
+    {
+        //Remettre la valeur initiale, reset joy (je ne sais pas encore comment faire);
+        Pompote.Joy = 10;
+        Debug.Log("Joy =   " + Pompote.Joy);
     }
 
 
