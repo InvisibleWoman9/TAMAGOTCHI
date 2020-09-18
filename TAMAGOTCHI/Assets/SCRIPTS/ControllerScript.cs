@@ -5,18 +5,17 @@ using UnityEngine;
 public class ControllerScript : MonoBehaviour
 {
 
-    public Tamagotchi Smoggles = new Tamagotchi(30, 10, 10, 10);
-    float Timer;
+    public Tamagotchi Smoggles = new Tamagotchi(30, 10, 10, 10);    
+    public Sprite monstresleep,monstreeat,monstrejoy, monstredebase;
+    public SpriteRenderer visuelmonstre;
+    bool busy;
     
     void Start()
     {
         
     }
 
-    void TourDejeu()
-    {
-
-    }
+    
     
     void Update()
     {
@@ -28,9 +27,7 @@ public class ControllerScript : MonoBehaviour
         {
             Smoggles.Hunger -= Time.deltaTime/60f;
             Smoggles.Sleep -= Time.deltaTime/120f;
-            Smoggles.Joy -= Time.deltaTime/180f;
-
-            
+            Smoggles.Joy -= Time.deltaTime/180f;           
         }
         
 
@@ -59,22 +56,34 @@ public class ControllerScript : MonoBehaviour
 
     
 
-    //Il faut que j'affiche quand il mange le sprite de quand il mange aussi 
+    void FinDaction()
+    {
+        busy = false;
+        visuelmonstre.sprite = monstredebase;
+    }
 
     //Fonction Manger
     void Eat()
     {
         
+        if(busy) return;
+        busy = true;
+        Invoke ("FinDaction", 3f);
+        visuelmonstre.sprite = monstreeat;
         Smoggles.Hunger = 10 ;
         Smoggles.Joy ++;
         Smoggles.Sleep ++;
+
         Debug.Log("Hunger =   " + Smoggles.Hunger);
     }
 
     //Fonction Dormir
     void Sleep()
     {
-        
+        if(busy) return;
+        busy = true;
+        Invoke ("FinDaction", 3f);
+        visuelmonstre.sprite = monstresleep;
         Smoggles.Sleep = 10;
         Smoggles.Joy ++;
         Smoggles.Hunger -= 2f;
@@ -84,7 +93,10 @@ public class ControllerScript : MonoBehaviour
     //Fonction de Joie
     void Joy()
     {
-        
+        if(busy) return;
+        busy = true;
+        Invoke ("FinDaction", 3f);
+        visuelmonstre.sprite = monstrejoy;
         Smoggles.Joy = 10;
         Smoggles.Sleep ++;
         Debug.Log("Joy =   " + Smoggles.Joy);
